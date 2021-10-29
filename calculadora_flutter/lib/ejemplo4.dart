@@ -8,9 +8,44 @@ class Suma extends StatefulWidget {
 class _SumaState extends State<Suma> {
   final num1 = TextEditingController();
   final num2 = TextEditingController();
-  int res = 0;
+  double res = 0;
   String n1 = "";
   String n2 = "";
+  int val = -1;
+  String resultado = "";
+  void operacion() {
+    n1 = num1.text;
+    n2 = num2.text;
+
+    switch (val) {
+      case 1:
+        res = double.parse(n1) + double.parse(n2);
+        setState(() {
+          resultado = 'Suma: ' + res.toString();
+        });
+        break;
+      case 2:
+        res = double.parse(n1) - double.parse(n2);
+        setState(() {
+          resultado = 'Resta: ' + res.toString();
+        });
+        break;
+      case 3:
+        res = int.parse(n1) / int.parse(n2);
+        setState(() {
+          resultado = 'División: ' + res.toString();
+        });
+        break;
+      case 4:
+        res = double.parse(n1) * double.parse(n2);
+        setState(() {
+          resultado = 'Multiplicación: ' + res.toString();
+        });
+        break;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String rutaImagen = "assets/img/a.jpg";
@@ -34,6 +69,7 @@ class _SumaState extends State<Suma> {
             ),
           ],
         ));
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Suma'),
@@ -60,6 +96,63 @@ class _SumaState extends State<Suma> {
                     hintText: 'Ingrese el segundo numero',
                   )),
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ListTile(
+                  title: Text("Sumar"),
+                  leading: Radio(
+                    value: 1,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        val = int.parse(value.toString());
+                      });
+                    },
+                    activeColor: Colors.brown[700],
+                  ),
+                ),
+                ListTile(
+                  title: Text("Restar"),
+                  leading: Radio(
+                    value: 2,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        val = int.parse(value.toString());
+                      });
+                    },
+                    activeColor: Colors.brown[700],
+                  ),
+                ),
+                ListTile(
+                  title: Text("Dividir"),
+                  leading: Radio(
+                    value: 3,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        val = int.parse(value.toString());
+                      });
+                    },
+                    activeColor: Colors.brown[700],
+                  ),
+                ),
+                ListTile(
+                  title: Text("Multiplicar"),
+                  leading: Radio(
+                    value: 4,
+                    groupValue: val,
+                    onChanged: (value) {
+                      setState(() {
+                        val = int.parse(value.toString());
+                      });
+                    },
+                    activeColor: Colors.brown[700],
+                  ),
+                ),
+              ],
+            ),
             Container(
               padding: EdgeInsets.all(15),
               child: ElevatedButton(
@@ -68,12 +161,16 @@ class _SumaState extends State<Suma> {
                     style: TextStyle(fontSize: 22),
                   ),
                   onPressed: () {
-                    n1 = num1.text;
-                    n2 = num2.text;
-                    res = int.parse(n1) + int.parse(n2);
-                    print(n1 + ' ' + n2);
+                    operacion();
                   }),
             ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                'Resultado de la $resultado',
+                style: TextStyle(fontSize: 22),
+              ),
+            )
           ],
         ));
   }
